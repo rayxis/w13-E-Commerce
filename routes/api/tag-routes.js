@@ -3,24 +3,27 @@ const {Tag, Product, ProductTag, Category} = require('../../models');
 
 // The `/api/tags` endpoint
 
+// Route for getting all tags
 router.get('/', (req, res) => {
 	// find all tags
 	// be sure to include its associated Product data
-	Tag.findAll()
-	   .then()
-		// TODO: be more consistent with the variable name; also include the Product data
-       .then(tag => res.status(200).json(tag))
-       .catch(err => res.status(400).json(err));
+	Tag.findAll({include: [{model: Product}]})
+		// Send JSON data to user
+	   .then(tagList => res.status(200).json(tagList))
+	   .catch(err => res.status(400).json(err));
 });
 
+// Route for a specific tag
 router.get('/:id', (req, res) => {
 	// find a single tag by its `id`
 	// be sure to include its associated Product data
-	Tag.findOne({where: {id: req.params.id}})
-	   .then()
-		// TODO: be more consistent with the variable name; also include the Product data
-       .then(tag => res.status(200).json(tag))
-       .catch(err => res.status(400).json(err));
+	Tag.findOne({
+		            where:   {id: req.params.id},
+		            include: [{model: Product}]
+	            })
+		// Send JSON data to user
+	   .then(tagItem => res.status(200).json(tagItem))
+	   .catch(err => res.status(400).json(err));
 });
 
 router.post('/', async (req, res) => {
