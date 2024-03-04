@@ -26,18 +26,16 @@ router.get('/:id', (req, res) => {
 		    .catch(err => res.status(400).json(err));
 });
 
+// Route to add a category
 router.post('/', (req, res) => {
-	// create a new category
-	Category.create(req.body)
-	        .then(product => {
-		        // TODO: Figure out what the input should look like
-		        if (req.body.category.length) {
-		        }
-	        })
-	        .then(newCategory => res.status(200).json(newCategory))
-	        .catch(err => res.status(400).json(err));
+	// Create a new category
+	Category.create({category_name: req.body.categoryName})
+		// Send the values back to the user in JSON format
+		    .then(newCategory => res.status(200).json(newCategory))
+		    .catch(err => res.status(400).json(err));
 });
 
+// Route to update a specific category
 router.put('/:id', (req, res) => {
 	// update a category by its `id` value
 	Category.update(req.body, {where: {id: req.params.id}})
@@ -50,8 +48,8 @@ router.delete('/:id', (req, res) => {
 	// Delete a category by its `id` value
 	Category.destroy({where: {id: req.params.id}})
 		// Send JSON data to user
-	        .then(result => res.status(200).json(result))
-	        .catch((err) => res.status(400).json(err));
+		    .then(result => res.status(200).json(result))
+		    .catch((err) => res.status(400).json(err));
 });
 
 module.exports = router;

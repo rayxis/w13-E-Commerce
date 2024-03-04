@@ -32,7 +32,7 @@ router.get('/:id', (req, res) => {
 	       .catch(err => res.status(400).json(err));
 });
 
-// create new product
+// Route to add a product
 router.post('/', (req, res) => {
 	/* req.body should look like this...
 	 {

@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 	   .catch(err => res.status(400).json(err));
 });
 
-// Route for a specific tag
+// Route to get a specific tag
 router.get('/:id', (req, res) => {
 	// find a single tag by its `id`
 	// be sure to include its associated Product data
@@ -26,14 +26,16 @@ router.get('/:id', (req, res) => {
 	   .catch(err => res.status(400).json(err));
 });
 
+// Route to add a tag
 router.post('/', async (req, res) => {
-	// create a new tag
-	Tag.create(req.body)
-	   .then()
-	   .then()
+	// Create a new tag
+	Tag.create({tag_name: req.body.tagName})
+	   // Send the values back to the user in JSON format
+	   .then(newTag => res.status(200).json(newTag))
 	   .catch((err) => res.status(400).json(err));
 });
 
+// Route to update a specific tag
 router.put('/:id', (req, res) => {
 	// update a tag's name by its `id` value
 	Tag.update(req.body, {where: {id: req.params.id}})
