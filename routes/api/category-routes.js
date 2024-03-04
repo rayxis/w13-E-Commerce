@@ -45,11 +45,12 @@ router.put('/:id', (req, res) => {
 	        .catch((err) => res.status(400).json(err));
 });
 
+// Route to delete a specific category
 router.delete('/:id', (req, res) => {
-	// delete a category by its `id` value
+	// Delete a category by its `id` value
 	Category.destroy({where: {id: req.params.id}})
-	        .then()
-	        .then()
+		// Send JSON data to user
+	        .then(result => res.status(200).json(result))
 	        .catch((err) => res.status(400).json(err));
 });
 

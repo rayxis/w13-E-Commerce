@@ -41,11 +41,12 @@ router.put('/:id', (req, res) => {
 	   .catch((err) => res.status(400).json(err));
 });
 
+// Route to delete a specific tag
 router.delete('/:id', (req, res) => {
-	// delete on tag by its `id` value
+	// Delete on tag by its `id` value
 	Tag.destroy({where: {id: req.params.id}})
-	   .then()
-	   .then()
+		// Send JSON data to user
+	   .then(result => res.status(200).json(result))
 	   .catch((err) => res.status(400).json(err));
 });
 
