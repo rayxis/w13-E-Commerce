@@ -37,9 +37,10 @@ router.post('/', async (req, res) => {
 
 // Route to update a specific tag
 router.put('/:id', (req, res) => {
-	// update a tag's name by its `id` value
-	Tag.update(req.body, {where: {id: req.params.id}})
-	   .then((product) => {})
+	// Update a tag's name by its `id` value
+	Tag.update({tag_name: req.body.tagName}, {where: {id: req.params.id}})
+		// Send JSON data to user
+	   .then(result => res.status(200).json(result))
 	   .catch((err) => res.status(400).json(err));
 });
 
@@ -47,6 +48,8 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
 	// Delete on tag by its `id` value
 	Tag.destroy({where: {id: req.params.id}})
+		// Destroy the associated product tags
+       .then(() => ProductTag.destroy({where: {tag_id: req.params.id}}))
 		// Send JSON data to user
 	   .then(result => res.status(200).json(result))
 	   .catch((err) => res.status(400).json(err));

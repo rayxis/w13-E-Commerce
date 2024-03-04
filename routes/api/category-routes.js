@@ -1,6 +1,6 @@
-const router                   = require('express').Router();
-const {Category, Product, Tag} = require('../../models');
-const req                      = require('express/lib/request');
+const router                               = require('express').Router();
+const {Category, Product, Tag, ProductTag} = require('../../models');
+const req                                  = require('express/lib/request');
 const res                      = require('express/lib/response');
 
 // The `/api/categories` endpoint
@@ -38,8 +38,8 @@ router.post('/', (req, res) => {
 // Route to update a specific category
 router.put('/:id', (req, res) => {
 	// update a category by its `id` value
-	Category.update(req.body, {where: {id: req.params.id}})
-	        .then((product) => {})
+	Category.update({category_name: req.body.categoryName}, {where: {id: req.params.id}})
+	        .then(result => res.status(200).json(result))
 	        .catch((err) => res.status(400).json(err));
 });
 

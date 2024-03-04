@@ -108,7 +108,9 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
 	// Delete one product by its `id` value
 	Product.destroy({where: {id: req.params.id}})
-		// Send JSON data to user
+	       // Destroy the associated product tags
+	       .then(product => ProductTag.destroy({where: {product_id: req.params.id}}))
+		// Send JSON response data to user
 	       .then(result => res.status(200).json(result))
 	       .catch(err => res.status(400).json(err));
 });
